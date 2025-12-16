@@ -50,7 +50,7 @@ const ReceiptDetailsForm : React.FC<ReceiptDetailsFormProp> = ({ setStage }) => 
                         id="dropdownUsersSearchButton" data-dropdown-toggle="dropdownSearch" data-dropdown-placement="bottom"
                         className="inline-flex w-full items-start self-end justify-between text-[#013941] bg-brand box-border border border-[#E0E0E0] rounded-3xl shadow-xs font-medium leading-5 rounded-base text-sm p-4 focus:outline-none" type="button">
                         {selectedBank ? selectedBank : "Select an Option"}
-                        <svg className="w-4 h-4 ms-1.5 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/></svg>
+                        <svg className="w-4 h-4 ms-1.5 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 9-7 7-7-7"/></svg>
                     </button>
                     <div className="relative inline-block "></div>
                 

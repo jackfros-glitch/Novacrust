@@ -1,5 +1,6 @@
 "use client"
 import React, { use, useEffect, useMemo, useState } from 'react'
+import Image from "next/image";
 
 interface CheckoutFormProp{
   setStage: React.Dispatch<React.SetStateAction<number>>
@@ -185,7 +186,6 @@ const CheckoutForm : React.FC<CheckoutFormProp> = ({ setStage }) => {
   
     const rate = rateObject ? rateObject.rate : 0; 
     const amountToReceive = amountToPay * rate;
-
     setAmountToReceive(amountToReceive)
   }
 
@@ -205,9 +205,13 @@ const CheckoutForm : React.FC<CheckoutFormProp> = ({ setStage }) => {
     setStage(2);
   }
 
-  useEffect(()=>{
-    CalculateAmountToPay()
-  }, [])
+  useEffect(() => {
+    const rateObject =
+      selectedNetwork.conversionRates[selectedCurrency.country];
+
+    const rate = rateObject?.rate ?? 0;
+    setAmountToReceive(amountToPay * rate);
+}, [amountToPay, selectedNetwork, selectedCurrency]);
 
   return (
     <form className='bg-white border border-slate-100 rounded-2xl p-2 h-[90vh] my-auto overflow-clip'>
@@ -278,6 +282,7 @@ const CheckoutForm : React.FC<CheckoutFormProp> = ({ setStage }) => {
                                 key={network.name}
                                 onClick={(): void => {
                                   setSelectedNetwork(network);
+                                  CalculateAmountToPay()
                                   setIsNetworkDropdownOpen(false);
                                   setSearchTerm("");
                                 }}
@@ -354,6 +359,7 @@ const CheckoutForm : React.FC<CheckoutFormProp> = ({ setStage }) => {
                                 key={currency.country}
                                 onClick={(): void => {
                                   setSelectedCurrency(currency);
+                                  CalculateAmountToPay();
                                   setIsCurrencyDropdownOpen(false);
                                   setCurrencySearchTerm("");
                                 }}
@@ -433,9 +439,11 @@ const CheckoutForm : React.FC<CheckoutFormProp> = ({ setStage }) => {
                                 }}
                                 className={`flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F5F5F5] ${ selectedPaymentWallet ? (selectedPaymentWallet.name === wallet.name ? 'bg-[#F5F5F5]': '') : "Select an Option" } cursor-pointer`}
                               >
-                                <img
-                                  src={wallet.thumbnail}
-                                  alt={"country currency icon"}
+                                <Image
+                                  src={wallet?.thumbnail || "/placeholder.svg"}
+                                  alt="country currency icon"
+                                  width={20}
+                                  height={20}
                                   className="w-5 h-5"
                                 />
                                 <span>{wallet.name}</span>
@@ -505,9 +513,11 @@ const CheckoutForm : React.FC<CheckoutFormProp> = ({ setStage }) => {
                                 }}
                                 className={`flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[#F5F5F5] ${selectedReceivingWallet ? (selectedReceivingWallet.name === wallet.name ? 'bg-[#F5F5F5]': ''): "Select an Option"} cursor-pointer`}
                               >
-                                <img
-                                  src={wallet.thumbnail}
-                                  alt={"country currency icon"}
+                                <Image
+                                  src={wallet?.thumbnail || "/placeholder.svg"}
+                                  alt="country currency icon"
+                                  width={20}
+                                  height={20}
                                   className="w-5 h-5"
                                 />
                                 <span>{wallet.name}</span>
