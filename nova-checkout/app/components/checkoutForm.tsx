@@ -6,15 +6,11 @@ interface CheckoutFormProp{
 }
 
 interface ConversionRate{
-  
   currencyCode : string;
   rate : number;
   thumbnail: string;
 }
 
-// interface Currency{
-//   code: string;
-// }
 
 interface BlockchainNetwork {
   name: string;
@@ -190,8 +186,7 @@ const CheckoutForm : React.FC<CheckoutFormProp> = ({ setStage }) => {
     const rate = rateObject ? rateObject.rate : 0; 
     const amountToReceive = amountToPay * rate;
 
-    setAmountToReceive(amountToReceive  )
-    // const anountToRecieve = amountToPay * selectedNetwork.conversionRates[selectedCurrency.country].rate  
+    setAmountToReceive(amountToReceive)
   }
 
   const checkoutOptions = ["Crypto to cash", "Cash to crypto", "Crypto to fiat loan"]
@@ -258,7 +253,6 @@ const CheckoutForm : React.FC<CheckoutFormProp> = ({ setStage }) => {
                   {
                   isNetworkDropdownOpen && (
                     <div className="relative">
-        
                         <div id="dropdownSearch" className="absolute z-10 bg-neutral-primary-medium rounded-base shadow-lg w-54">
                       <div className='absolute bg-white rounded-2xl -left-40 top-1 border border-[#E0E0E0] p-2'>
                         <div className="flex items-center bg-white rounded-3xl border border-[#E0E0E0] px-2 py-1">
@@ -300,7 +294,7 @@ const CheckoutForm : React.FC<CheckoutFormProp> = ({ setStage }) => {
                           )}
                         </ul>
                       </div>
-                                      </div>
+                      </div>
                     </div>
                         )
                       }

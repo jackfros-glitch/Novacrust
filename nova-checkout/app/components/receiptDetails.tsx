@@ -13,6 +13,7 @@ const ReceiptDetailsForm : React.FC<ReceiptDetailsFormProp> = ({ setStage }) => 
     const [bankDropdownState, setBankDropdownState] = useState<boolean>(false)
     const [bankSearchTerm, setBankSearchTerm] = useState<string>("")
     const [selectedBank, setSelectedBank] = useState<string>("");
+    const [accountNumber, setAccountNumber] = useState("");
 
     const availableBanks = [
         "UBA",
@@ -99,6 +100,30 @@ const ReceiptDetailsForm : React.FC<ReceiptDetailsFormProp> = ({ setStage }) => 
                             )
                         }
                     </div>
+                </div>
+                <div className='mt-8'>
+                    <div className='mb-3'>Account number</div>
+                    <input
+                        className="inline-flex w-full items-start self-end justify-between text-[#013941] bg-brand box-border border border-[#E0E0E0] rounded-3xl shadow-xs font-medium leading-5 rounded-base text-sm p-4 focus:outline-none" 
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        maxLength={10} 
+                        onChange={(e) => {
+                            const onlyNumbers = e.currentTarget.value.replace(/\D/g, "");
+                            setAccountNumber(onlyNumbers);}
+                        }
+                        value={accountNumber}
+                        />
+                </div>
+                <div className='mt-8'>
+                    <div className='mb-3'>Account name</div>
+                    <input
+                        className="inline-flex w-full items-start self-end justify-between text-[#013941] bg-[#F2F2F2] box-border border border-[#E0E0E0] rounded-3xl shadow-xs font-medium leading-5 rounded-base text-sm p-4 focus:outline-none" 
+                        type="text" 
+                        readOnly={true}
+                        value={"ODUTUGA GBEKE"}
+                        />
                 </div>
                 <div className='mt-8'>
                 <button
