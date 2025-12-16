@@ -216,7 +216,7 @@ const CheckoutForm : React.FC<CheckoutFormProp> = ({ setStage }) => {
 
   return (
     <form className='bg-white border border-slate-100 rounded-2xl p-2 h-[90vh] my-auto overflow-clip'>
-      <div className='h-full overflow-y-scroll p-8'>
+      <div className='h-full overflow-y-auto p-8'>
         <nav className='flex gap-x-3 gap-y-4  bg-[#F2F2F2] rounded-2xl mb-8'>{
           checkoutOptions.map((option, index)=>(
             <div key={index + option}
