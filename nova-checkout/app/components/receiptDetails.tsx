@@ -1,25 +1,28 @@
 "use client"
 
 import React, { use, useMemo, useState } from 'react'
+import { useAppContext } from '../context/AppContext';
+import { availableBanks } from '@/lib/data'
 
 
 interface ReceiptDetailsFormProp{
-  setStage: React.Dispatch<React.SetStateAction<number>>
 }
 
 
-const ReceiptDetailsForm : React.FC<ReceiptDetailsFormProp> = ({ setStage }) => {
+const ReceiptDetailsForm : React.FC<ReceiptDetailsFormProp> = () => {
+    const { 
+        setStage, 
+        selectedBank, 
+        setSelectedBank, 
+        accountNumber, 
+        setAccountNumber 
+    } = useAppContext()
 
     const [bankDropdownState, setBankDropdownState] = useState<boolean>(false)
     const [bankSearchTerm, setBankSearchTerm] = useState<string>("")
-    const [selectedBank, setSelectedBank] = useState<string>("");
-    const [accountNumber, setAccountNumber] = useState("");
+    
 
-    const availableBanks = [
-        "UBA",
-        "FirstBank",
-        "ZenithBank"
-    ]
+    
 
     const filteredbanks = useMemo<string[]>(() => {
         return availableBanks.filter((bank) =>
@@ -126,12 +129,12 @@ const ReceiptDetailsForm : React.FC<ReceiptDetailsFormProp> = ({ setStage }) => 
                         />
                 </div>
                 <div className='mt-8'>
-                <button
-                  className='bg-[#013941] hover:cursor-pointer w-full rounded-3xl p-4 text-white'
-                  >
-                    Next
-                  </button>
-                        </div>
+                    <button
+                      className='bg-[#013941] hover:cursor-pointer w-full rounded-3xl p-4 text-white'
+                      >
+                        Next
+                    </button>
+                </div>
             </div>
         </form>
     )

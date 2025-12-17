@@ -1,63 +1,83 @@
 "use client"
 import React, { use, useEffect, useMemo, useState } from 'react'
 import Image from "next/image";
+import { availableBlockchainNetworks, availableCurrencies, availableWallets } from "@/lib/data"
+import {ConversionRate, BlockchainNetwork, Currency, Wallet } from '@/lib/types'
+import { useAppContext } from '../context/AppContext';
 
 interface CheckoutFormProp{
-  setStage: React.Dispatch<React.SetStateAction<number>>
 }
 
-interface ConversionRate{
-  currencyCode : string;
-  rate : number;
-  thumbnail: string;
-}
+// interface ConversionRate{
+//   currencyCode : string;
+//   rate : number;
+//   thumbnail: string;
+// }
 
 
-interface BlockchainNetwork {
-  name: string;
-  thumbnail: string;
-  conversionRates: {
-    [country: string]: ConversionRate;
-  };
-}
+// interface BlockchainNetwork {
+//   name: string;
+//   thumbnail: string;
+//   conversionRates: {
+//     [country: string]: ConversionRate;
+//   };
+// }
 
-interface Currency {
-  code : string;
-  country : string;
-  thumbnail: string;
-}
+// interface Currency {
+//   code : string;
+//   country : string;
+//   thumbnail: string;
+// }
 
-interface Wallet{
-  name: string;
-  thumbnail: string;
-}
+// interface Wallet{
+//   name: string;
+//   thumbnail: string;
+// }
 
-const CheckoutForm : React.FC<CheckoutFormProp> = ({ setStage }) => {
+const CheckoutForm : React.FC<CheckoutFormProp> = () => {
+
+  const {
+    setStage,
+    amountToPay,
+    setAmountToPay,
+    amountToReceive,
+    setAmountToReceive,
+    selectedCurrency,
+    setSelectedCurrency,
+    selectedPaymentWallet,
+    setSelectedPaymentWallet,
+    selectedReceivingWallet,
+    setSelectedReceivingWallet,
+    selectedCheckoutOption,
+    setSelectedCheckoutOption,
+    selectedNetwork,
+    setSelectedNetwork,
+  } = useAppContext();
 
   const [isCurrencyDropdownOpen, setIsCurrencyDropdownOpen] = useState<boolean>(false);
   const [isNetworkDropdownOpen, setIsNetworkDropdownOpen] = useState<boolean>(false);
-  const [amountToPay, setAmountToPay] = useState<number>(1.00)
-  const [amountToReceive, setAmountToReceive] = useState<number>(0.00)
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency>({ "code": "NGN", "country": "Nigeria", "thumbnail": "image.svg" }, );
-  const [selectedPaymentWallet, setSelectedPaymentWallet] = useState<Wallet | null>();
-  const [selectedReceivingWallet, setSelectedReceivingWallet] = useState<Wallet | null>()
-  const [selectedCheckoutOption, setSelectedCheckoutOption] = useState<string>("Crypto to cash");
+  // const [amountToPay, setAmountToPay] = useState<number>(1.00)
+  // const [amountToReceive, setAmountToReceive] = useState<number>(0.00)
+  // const [selectedCurrency, setSelectedCurrency] = useState<Currency>({ "code": "NGN", "country": "Nigeria", "thumbnail": "image.svg" }, );
+  // const [selectedPaymentWallet, setSelectedPaymentWallet] = useState<Wallet | null>();
+  // const [selectedReceivingWallet, setSelectedReceivingWallet] = useState<Wallet | null>()
+  // const [selectedCheckoutOption, setSelectedCheckoutOption] = useState<string>("Crypto to cash");
 
-  const [selectedNetwork, setSelectedNetwork] = useState<BlockchainNetwork>({
-      "name": "USDT - ETH",
-      "thumbnail": "/image 6.svg",
-      "conversionRates": {
-        "Nigeria": {
-        "currencyCode": "NGN",
-        "rate": 4312967,
-        "thumbnail": ""
-        },
-        "Ghana": {
-        "currencyCode": "GHS",
-        "rate": 33971.55,
-        "thumbnail": ""
-        }
-    }    });
+  // const [selectedNetwork, setSelectedNetwork] = useState<BlockchainNetwork>({
+  //     "name": "USDT - ETH",
+  //     "thumbnail": "/image 6.svg",
+  //     "conversionRates": {
+  //       "Nigeria": {
+  //       "currencyCode": "NGN",
+  //       "rate": 4312967,
+  //       "thumbnail": ""
+  //       },
+  //       "Ghana": {
+  //       "currencyCode": "GHS",
+  //       "rate": 33971.55,
+  //       "thumbnail": ""
+  //       }
+  //   }    });
 
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [currencySearchTerm, setCurrencySearchTerm] = useState<string>("");
@@ -66,96 +86,7 @@ const CheckoutForm : React.FC<CheckoutFormProp> = ({ setStage }) => {
   const [isPayFromDropdownOpen,setIsPayFromDropdownOpen] = useState<boolean>(false);
   const [isPayToDropdownOpen,setIsPayToDropdownOpen] = useState<boolean>(false);
 
-  const availableCurrencies: Currency[] = [
-    { "code": "NGN", "country": "Nigeria", "thumbnail": "image.svg" }, 
-    { "code" : "GHS", "country" : "Ghana", "thumbnail": "Flag_of_Ghana.svg" }
-  ]
-
-  const availableWallets: Wallet [] = [
-    {
-      "name": "Metamask",
-      "thumbnail": "/Rectangle 4414.svg"
-    },
-    {
-      "name": "Rainbow",
-      "thumbnail": "/Rectangle 4415.svg"
-    },
-    {
-      "name": "WalletConnect",
-      "thumbnail": "/Rectangle 4413.svg"
-    },
-    {
-      "name": "Other Crypto Wallets (Binance, Conibase, Bybit etc)",
-      "thumbnail": ""
-    }
-  ]
-  const availableBlockchainNetworks: BlockchainNetwork[] = [
-    {
-      "name": "USDT - ETH",
-      "thumbnail": "/image 6.svg",
-      "conversionRates": {
-        "Nigeria": {
-        "currencyCode": "NGN",
-        "rate": 4312967,
-        "thumbnail": ""
-        },
-        "Ghana": {
-        "currencyCode": "GHS",
-        "rate": 33971.55,
-        "thumbnail": ""
-        }
-      }
-    },
-    { 
-      "name" : "USDT - CELO",
-      "thumbnail" : "/Rectangle 4410.svg",
-      "conversionRates": {
-        "Nigeria": {
-        "currencyCode": "NGN",
-        "rate": 198.23,
-        "thumbnail": ""
-        },
-        "Ghana": {
-        "currencyCode": "GHS",
-        "rate": 1.56,
-        "thumbnail": ""
-        }
-      }
-    }, 
-    {
-      "name" : "USDT - TON",
-      "thumbnail" : "/Rectangle 4411.svg",
-      "conversionRates": {
-        "Nigeria": {
-        "currencyCode": "NGN",
-        "rate": 2225.42,
-        "thumbnail": ""
-        },
-        "Ghana": {
-        "currencyCode": "GHS",
-        "rate": 17.60,
-        "thumbnail": ""
-        }
-      }
-    },
-    {
-      "name": "USDT - BNB",
-      "thumbnail": "/Rectangle 4412.svg",
-      "conversionRates": {
-        "Nigeria": {
-        "currencyCode": "NGN",
-        "rate": 1233358.73,
-        "thumbnail": ""
-        },
-        "Ghana" : {
-        "currencyCode": "GHS",
-        "rate": 9988.41,
-        "thumbnail": ""
-        }
-      }
-    }
-    
-  ]
+  
   const filteredNetworks = useMemo<BlockchainNetwork[]>(() => {
     return availableBlockchainNetworks.filter((network) =>
       network.name.toLowerCase().startsWith(searchTerm.toLowerCase())
